@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (cartItems.length > 0) { %>
+                <div class="grid">
+                    <% for (let product of cartItems) { %>
+                        <article class="card product-item">
+                            <header class="card__header">
+                                <h1 class="product__title"><%= product.title %></h1>
+                                <span><%= product.dataValues.cartItem.quantity %></span>
+                            </header>
+                            <div class="card__image">
+                                <img src="<%= product.imageUrl %>"
+                                    alt="<%= product.title %>">
+                            </div>
+                            <div class="card__content">
+                                <h2 class="product__price">$<%= product.price %></h2>
+                                <p class="product__description"><%= product.description %></p>
+                            </div>
+                            <a class="btn" href="/products/<%=product.id%>">Details</a>
+                            <form method="POST" action="/delete-cart-item">
+                                <input type="hidden" name="productId" value="<%=product.id%>"/>
+                                <button type="submit" class="btn" >Delete item</button>
+                                
+                            </form>
+                        </article>
+                    <% } %>
+                    
+                </div>
+                <hr style="margin: 2rem 0px;" >
+                <div class="centered">
+                    <form method="post" action="/create-order">
+                        <button type="submit" class="btn" >
+                            Order Now!
+                        </button>
+                    </form>
+                </div>
+            <% } else { %>
+                <h1>Cart is empty</h1>
+            <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>
