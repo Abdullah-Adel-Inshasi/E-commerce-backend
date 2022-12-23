@@ -84,10 +84,13 @@ exports.postCart = (req, res, _next) => {
     .catch(console.error);
 };
 
-exports.getOrders = (_req, res, _next) => {
-  res.render("shop/orders", {
-    path: "/orders",
-    pageTitle: "Your Orders",
+exports.getOrders = (req, res, _next) => {
+  req.user.getOrders({ include: "products" }).then((orders) => {
+    res.render("shop/orders", {
+      path: "/orders",
+      pageTitle: "Your Orders",
+      orders,
+    });
   });
 };
 
