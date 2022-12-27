@@ -19,8 +19,8 @@
           <p class="product__description"><%= product.description %></p>
         </div>
         <div class="card__actions">
-          <%-include('../includes/add-to-cart-button.ejs',{id:product.id}) %>
-          <a class="btn" href="/products/<%=product.id%>">Details</a>
+          <%-include('../includes/add-to-cart-button.ejs',{id:product._id}) %>
+          <a class="btn" href="/products/<%=product._id%>">Details</a>
         </div>
       </article>
       <% } %>

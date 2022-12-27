@@ -1,11 +1,21 @@
-const { Sequelize } = require("sequelize");
-// test
-const sequelize = new Sequelize({
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: "node-course",
-  dialect: "mysql",
-  host: "localhost",
-});
+const { MongoClient } = require("mongodb");
+const URI = `mongodb+srv://${process.env.MONGO_CLIENT_USERNAME}:${process.env.MONGO_CLIENT_PASSWORD}@cluster0.oxsvm3u.mongodb.net/shop?retryWrites=true&w=majority`;
+let _db;
+const mongoConnect = (callback) => {
+  MongoClient.connect(URI)
+    .then((client) => {
+      callback();
+      _db = client.db();
+    })
+    .catch(console.error);
+};
 
-module.exports = sequelize;
+const getDB = () => {
+  if (!_db) {
+    throw new Error("No Database found");
+  }
+
+  return _db;
+};
+// test commit
+module.exports = { mongoConnect, getDB };
